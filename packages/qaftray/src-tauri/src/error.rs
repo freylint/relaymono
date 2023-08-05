@@ -1,21 +1,21 @@
-pub enum ErrorMessages {
-    WindowToggleFailed,
-    WindowRaiseFailed,
-    WindowHideFailed,
-    WindowAcquisitionFailed,
-    MonitorAcquisitionFailed,
+pub enum ErrMsg {
+    WindowToggle,
+    WindowRaise,
+    WindowHide,
+    WindowAcquisition,
+    MonitorAcquisition,
 }
 
-impl std::ops::Deref for ErrorMessages {
+impl std::ops::Deref for ErrMsg {
     type Target = str;
 
     fn deref(&self) -> &Self::Target {
         match self {
-            ErrorMessages::WindowToggleFailed => "Failed to toggle window",
-            ErrorMessages::WindowRaiseFailed => "Failed to raise window",
-            ErrorMessages::WindowHideFailed => "Failed to hide window",
-            ErrorMessages::WindowAcquisitionFailed => "Failed to acquire window",
-            ErrorMessages::MonitorAcquisitionFailed => "Failed to acquire monitor",
+            ErrMsg::WindowToggle => "Failed to toggle window",
+            ErrMsg::WindowRaise => "Failed to raise window",
+            ErrMsg::WindowHide => "Failed to hide window",
+            ErrMsg::WindowAcquisition => "Failed to acquire window",
+            ErrMsg::MonitorAcquisition => "Failed to acquire monitor",
         }
     }
 }

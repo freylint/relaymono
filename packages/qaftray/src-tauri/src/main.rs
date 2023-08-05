@@ -4,7 +4,7 @@
     windows_subsystem = "windows"
 )]
 
-use error::ErrorMessages;
+use error::ErrMsg;
 use tauri::{CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use window::{get_taskbar_pos, toggle_win};
 mod error;
@@ -22,8 +22,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             win.set_position(get_taskbar_pos(
                 &win,
                 &win.current_monitor()
-                    .expect(&ErrorMessages::MonitorAcquisitionFailed)
-                    .expect(&ErrorMessages::MonitorAcquisitionFailed),
+                    .expect(&ErrMsg::MonitorAcquisition)
+                    .expect(&ErrMsg::MonitorAcquisition),
             ))
             .unwrap();
         })
@@ -31,7 +31,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             // Fires when the tray icon is left clicked.
             SystemTrayEvent::LeftClick { .. } => {
                 // TODO(frey) State management for toggle
-                toggle_win(app).expect(&ErrorMessages::WindowToggleFailed);
+                toggle_win(app).expect(&ErrMsg::WindowToggle);
             }
             // Fires when the tray icon is double clicked.
             SystemTrayEvent::DoubleClick { .. } => {

@@ -1,14 +1,12 @@
-use crate::error::ErrorMessages;
+use crate::error::ErrMsg;
 use tauri::Manager;
 
 /// Toggle the visibility of the main window
 pub fn toggle_win(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Error>> {
-    let window = app
-        .get_window("main")
-        .expect(&ErrorMessages::WindowAcquisitionFailed);
+    let window = app.get_window("main").expect(&ErrMsg::WindowAcquisition);
     let monitor = window
         .current_monitor()?
-        .expect(&ErrorMessages::MonitorAcquisitionFailed);
+        .expect(&ErrMsg::MonitorAcquisition);
     let position = get_taskbar_pos(&window, &monitor);
 
     // Position window
@@ -17,10 +15,10 @@ pub fn toggle_win(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Erro
     // Toggle window
     match window.is_visible() {
         Ok(true) => {
-            window.hide().expect(&ErrorMessages::WindowHideFailed);
+            window.hide().expect(&ErrMsg::WindowHide);
         }
         Ok(false) => {
-            window.show().expect(&ErrorMessages::WindowRaiseFailed);
+            window.show().expect(&ErrMsg::WindowRaise);
         }
         Err(e) => {
             panic!("Failed to get window visibility: {}", e);

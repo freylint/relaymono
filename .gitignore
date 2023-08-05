@@ -1,0 +1,9 @@
+# IDE Configuration
+**/.vs/
+**/.vscode/
+**/.idea/
+
+# Build Artifacts
+**/node_modules/
+**/target/
+**/_

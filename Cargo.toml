@@ -1,0 +1,5 @@
+# Note this workspace exists to enable linting. Use the NPM scripts for development.
+
+[workspace]
+members = ["packages/qaftray/src-tauri"]
+resolver = "2"

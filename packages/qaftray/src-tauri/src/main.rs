@@ -24,7 +24,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 &win.current_monitor()
                     .expect(&ErrorMessages::MonitorAcquisitionFailed)
                     .expect(&ErrorMessages::MonitorAcquisitionFailed),
-            ));
+            ))
+            .unwrap();
         })
         .on_system_tray_event(|app, event| match event {
             // Fires when the tray icon is left clicked.

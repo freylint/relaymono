@@ -1,6 +1,6 @@
 {
   "build": {
-    "distDir": "../public",
+    "distDir": "https://www.google.com/android/find/",
     "withGlobalTauri": false,
     "devPath": "https://www.google.com/android/find/"
   },

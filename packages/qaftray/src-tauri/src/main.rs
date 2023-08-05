@@ -1,5 +1,10 @@
 #![doc = include_str!("../../README.md")]
 
+#![cfg_attr(
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
+)]
+
 use error::ErrorMessages;
 use tauri::{CustomMenuItem, SystemTray, SystemTrayEvent, SystemTrayMenu};
 use window::{get_taskbar_pos, toggle_win};

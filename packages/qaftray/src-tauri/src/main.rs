@@ -1,5 +1,4 @@
 #![doc = include_str!("../../README.md")]
-
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
@@ -19,8 +18,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     tauri::Builder::default()
         .system_tray(system_tray)
         .on_page_load(|win, _| {
-            // Hide the window on startup
-            win.hide().expect(&ErrorMessages::WindowHideFailed);
             // Position the window on startup
             win.set_position(get_taskbar_pos(
                 &win,

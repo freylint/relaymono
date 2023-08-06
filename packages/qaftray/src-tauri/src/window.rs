@@ -30,7 +30,7 @@ pub fn toggle_win(app: &tauri::AppHandle) -> Result<(), Box<dyn std::error::Erro
 
 /// Get the desired positionining of th pop up
 pub fn get_taskbar_pos(win: &tauri::Window, mon: &tauri::Monitor) -> tauri::Position {
-    let taskbar_height = 80;
+    let taskbar_height = 53;
     let win = win.inner_size().expect("Failed to get window size");
     let mon = mon.size();
 

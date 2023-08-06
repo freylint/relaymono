@@ -67,4 +67,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.platform }} bundle"
-          path: "${GITHUB_WORKSPACE}/target/release/bundle/*/*"
+          path: "${{env.GITHUB_WORKSPACE}}/target/release/bundle/*/*"

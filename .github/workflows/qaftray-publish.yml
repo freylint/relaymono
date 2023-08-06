@@ -4,11 +4,6 @@ on:
   push:
     tags: -"qaftray-v*"
   workflow_dispatch:
-    inputs:
-      tag:
-        description: "Tag to release"
-        required: true
-        default: "qaftray-v0.0.0"
 
 jobs:
   publish-tauri:

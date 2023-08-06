@@ -22,7 +22,13 @@
     },
     "bundle": {
       "active": true,
-      "targets": "all",
+      "targets": [
+        "deb",
+        "appimage",
+        "app",
+        "nsis",
+        "updater"
+      ],
       "identifier": "com.RelayGround.qaftray",
       "icon": [
         "icons/32x32.png",

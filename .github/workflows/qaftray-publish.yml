@@ -45,3 +45,7 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false
+      - uses: actions/upload-artifact@v3
+        with:
+          name: "${{ matrix.platform }} bundle"
+          path: ../../target/release/bundle/*/*

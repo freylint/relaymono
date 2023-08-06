@@ -49,9 +49,6 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
-      - name: Build QAFTray
-        run: npm -w ./packages/qaftray run tauri build
-
       - name: Cache Cargo build
         uses: actions/cache@v2
         with:
@@ -61,6 +58,9 @@ jobs:
           key: ${{ runner.os }}-build-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build QAFTray
+        run: npm -w ./packages/qaftray run tauri build
 
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v3

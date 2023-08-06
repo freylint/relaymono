@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - release
+    paths:
+      - "packages/qaftray/**"
+      - ".github/workflows/qaftray-publish.yml"
+      - "./*.*"
 
 jobs:
   publish-tauri:
@@ -13,7 +17,9 @@ jobs:
       fail-fast: false
       matrix:
         platform: [macos-latest, ubuntu-20.04, windows-latest]
-
+    defaults:
+      run:
+        working-directory: packages/qaftray
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3

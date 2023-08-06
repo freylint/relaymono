@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish-tauri:
+  build:
     permissions:
       contents: write
     strategy:
@@ -71,7 +71,7 @@ jobs:
         if: matrix.platform == 'ubuntu-20.04'
         uses: actions/upload-artifact@v3
         with:
-          name: "Release Artifacts"
+          name: "release_artifacts"
           path: |
             target/release/bundle/appimage/*.AppImage
           if-no-files-found: error
@@ -80,7 +80,7 @@ jobs:
         if: matrix.platform == 'ubuntu-20.04'
         uses: actions/upload-artifact@v3
         with:
-          name: "Release Artifacts"
+          name: "release_artifacts"
           path: |
             target/release/bundle/deb/*.deb
           if-no-files-found: error
@@ -89,7 +89,46 @@ jobs:
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
-          name: "Release Artifacts"
+          name: "release_artifacts"
           path: |
             target/release/bundle/nsis/*.exe
           if-no-files-found: error
+
+  publish:
+    runs-on: ubuntu-20.04
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: release_artifacts
+          path: build.zip
+
+      - name: Extract artifacts for release upload
+        run: |
+          mkdir pkg
+          unzip build.zip -d pkg/
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: QAFTray v${{ github.ref }}
+          body: |
+            TODO
+          draft: true
+          prerelease: true
+
+      - name: Upload Release Assets
+        run: |
+          for file in pkg/*; do
+            echo "Uploading $file"
+            curl \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: $(file -b --mime-type $file)" \
+              --data-binary @$file \
+              "${{ steps.create_release.outputs.upload_url }}?name=$(basename $file)"
+          done

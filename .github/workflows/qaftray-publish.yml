@@ -68,7 +68,7 @@ jobs:
         run: npm -w ./packages/qaftray run tauri build
 
       - name: Print file tree
-        run: tree -a | grep bundle
+        run: tree -d
 
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v3

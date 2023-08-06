@@ -52,6 +52,16 @@ jobs:
       - name: Build QAFTray
         run: npm -w ./packages/qaftray run tauri build
 
+      - name: Cache Cargo build
+        uses: actions/cache@v2
+        with:
+          path: |
+            target/release
+            target/debug
+          key: ${{ runner.os }}-build-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v3
         with:

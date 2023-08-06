@@ -91,7 +91,7 @@ jobs:
           if-no-files-found: error
 
       - name: Upload nsis artifact
-        if: matrix.platform == 'ubuntu-20.04'
+        if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: "Release Artifacts"

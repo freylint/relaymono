@@ -2,12 +2,8 @@
 name: "publish"
 on:
   push:
-    branches:
-      - release
-    paths:
-      - "packages/qaftray/**"
-      - ".github/workflows/qaftray-publish.yml"
-      - "./*.*"
+    tags:
+      -"qaftray-v*"
 
 jobs:
   publish-tauri:

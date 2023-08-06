@@ -72,13 +72,20 @@ jobs:
           pwd
           tree -d -I 'node_modules'
 
-      - name: Upload bundle artifact
+      - name: Upload appimage artifact
+        if: matrix.platform == 'ubuntu-20.04'
         uses: actions/upload-artifact@v3
         with:
-          name: "${{ matrix.platform }} bundle"
+          name: "${{ matrix.platform }} appimage"
           path: |
-            target/release/bundle/**.AppImage
-            target/release/bundle/**.deb
-            target/release/bundle/**.exe
+            target/release/bundle/appimage/*.AppImage
+          if-no-files-found: error
 
+      - name: Upload deb artifact
+        if: matrix.platform == 'ubuntu-20.04'
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ matrix.platform }} appimage"
+          path: |
+            target/release/bundle/deb/*.deb
           if-no-files-found: error

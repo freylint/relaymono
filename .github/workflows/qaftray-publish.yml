@@ -70,7 +70,7 @@ jobs:
       - name: Print file tree
         run: |
           pwd
-          tree -d -I 'node_modules|target'
+          tree -d -I 'node_modules'
 
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v3

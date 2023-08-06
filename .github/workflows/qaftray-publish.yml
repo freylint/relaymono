@@ -9,6 +9,7 @@ on:
         description: "Tag to release"
         required: true
         default: "qaftray-v0.0.0"
+
 jobs:
   publish-tauri:
     permissions:
@@ -22,29 +23,37 @@ jobs:
         working-directory: packages/qaftray
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v3
-      - name: setup node
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
-      - name: install Rust stable
+
+      - name: Install Rust stable toolchain
         uses: dtolnay/rust-toolchain@stable
-      - name: Cache cargo registry
+
+      - name: Cache Cargo registry
         uses: actions/cache@v2
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: install dependencies (ubuntu only)
+
+      - name: Install dependencies (Ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
-      - name: install frontend dependencies
-        run: npm install
-      - uses: tauri-apps/tauri-action@v0
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build and publish Tauri application
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -53,7 +62,9 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false
-      - uses: actions/upload-artifact@v3
+
+      - name: Upload bundle artifact
+        uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.platform }} bundle"
-          path: "$GITHUB_WORKSPACE/target/release/bundle/*/*"
+          path: "${GITHUB_WORKSPACE}/target/release/bundle/*/*"

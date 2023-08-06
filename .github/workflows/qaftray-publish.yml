@@ -76,5 +76,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.platform }} bundle"
-          path: target/release/bundle/
+          path: target/release/bundle/**/*.(deb|AppImage|exe)
           if-no-files-found: error

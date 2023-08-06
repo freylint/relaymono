@@ -76,4 +76,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.platform }} bundle"
-          path: relaymono/target/release/bundle/"
+          path: target/release/bundle"

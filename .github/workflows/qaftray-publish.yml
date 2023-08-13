@@ -99,6 +99,7 @@ jobs:
       - name: Extract artifacts for release upload
         run: |
           mkdir ${{ github.workspace }}/pkg
+          ls ${{ github.workspace }}
           unzip ${{ github.workspace }}/release_artifacts.zip -d ${{ github.workspace }}/pkg/
 
       - name: Create Release

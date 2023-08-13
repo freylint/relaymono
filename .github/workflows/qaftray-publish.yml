@@ -35,10 +35,6 @@ jobs:
             ~/.cargo/git
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Update package cache (Ubuntu only)
-        if: matrix.platform == 'ubuntu-20.04'
-        run: sudo apt-get update -qy
-
       - name: Install dependencies (Ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
         uses: awalsh128/cache-apt-pkgs-action@latest

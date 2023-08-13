@@ -59,11 +59,6 @@ jobs:
       - name: Build QAFTray
         run: npm -w ./packages/qaftray run tauri build
 
-      - name: Print file tree
-        run: |
-          pwd
-          tree -d -I 'node_modules'
-
       - name: Upload appimage artifact
         if: matrix.platform == 'ubuntu-20.04'
         uses: actions/upload-artifact@v3
@@ -100,6 +95,11 @@ jobs:
         with:
           name: release_artifacts
           path: build.zip
+
+      - name: Print file tree
+        run: |
+          pwd
+          tree -d -I 'node_modules'
 
       - name: Extract artifacts for release upload
         run: |

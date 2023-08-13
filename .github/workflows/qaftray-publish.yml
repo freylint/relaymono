@@ -107,7 +107,7 @@ jobs:
       - name: Extract artifacts for release upload
         run: |
           mkdir pkg
-          unzip build.zip -d pkg/
+          unzip ./build.zip -d pkg/
 
       - name: Create Release
         id: create_release

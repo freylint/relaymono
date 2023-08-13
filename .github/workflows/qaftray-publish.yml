@@ -41,7 +41,7 @@ jobs:
 
       - name: Install dependencies (Ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
-        uses: daaku/gh-action-apt-install@v4
+        uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: |
             libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "ci": "act -j qaftray-publish"
   },
   "dependencies": {},
   "devDependencies": {

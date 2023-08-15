@@ -100,19 +100,6 @@ jobs:
           name: release_artifacts
           path: ${{ github.workspace }}/release_artifacts
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: QAFTray v${{ github.ref }}
-          body: |
-            TODO
-          draft: true
-          prerelease: true
-
-      - name: Upload Release Assets
+      - name: Create release
         run: |
-          gh release upload ${{ github.ref }} ${{ github.workspace }}/release_artifacts/*
+          gh release create -d -p ${{ github.ref }} --generate-notes ${{ github.workspace }}/release_artifacts/*

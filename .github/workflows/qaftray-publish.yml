@@ -102,4 +102,4 @@ jobs:
 
       - name: Create release
         run: |
-          gh release create -d -p ${{ github.ref }} --generate-notes ${{ github.workspace }}/release_artifacts/*
+          gh release create -d -p ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/} --generate-notes ${{ github.workspace }}/release_artifacts/*

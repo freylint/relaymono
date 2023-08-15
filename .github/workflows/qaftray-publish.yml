@@ -88,6 +88,8 @@ jobs:
 
   publish:
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
     needs: build
     steps:
       - name: Download artifact

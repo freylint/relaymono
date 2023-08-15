@@ -94,13 +94,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: release_artifacts
-          path: ${{ github.workspace }}/release_artifacts.zip
-
-      - name: Extract artifacts for release upload
-        run: |
-          mkdir ${{ github.workspace }}/pkg
-          ls ${{ github.workspace }}/pkg
-          unzip ${{ github.workspace }}/release_artifacts.zip -d ${{ github.workspace }}/pkg/
+          path: ${{ github.workspace }}/release_artifacts
 
       - name: Create Release
         id: create_release
@@ -117,7 +111,7 @@ jobs:
 
       - name: Upload Release Assets
         run: |
-          for file in ${{ github.workspace }}/pkg/*; do
+          for file in ${{ github.workspace }}/release-artifacts/*
             echo "Uploading $file"
             curl \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \

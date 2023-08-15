@@ -91,6 +91,8 @@ jobs:
     permissions:
       contents: write
     needs: build
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v2

@@ -93,8 +93,9 @@ jobs:
     needs: build
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      RELEASE_FILES: release_artifacts/*
     steps:
-      - name: Download artifact
+      - name: Create Draft Release
         uses: actions/download-artifact@v2
         with:
           name: release_artifacts
@@ -102,4 +103,4 @@ jobs:
 
       - name: Create release
         run: |
-          gh release create ${GITHUB_REF#refs/*/} -t ${GITHUB_REF#refs/*/} -d -p release_artifacts/*
+          gh release create ${GITHUB_REF#refs/tags/} -t ${GITHUB_REF#refs/tags/} -d -p ${{ env.RELEASE_FILES }}

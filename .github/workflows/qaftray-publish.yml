@@ -103,4 +103,7 @@ jobs:
 
       - name: Create release
         run: |
-          gh release create ${GITHUB_REF#refs/tags/} -t ${GITHUB_REF#refs/tags/} -d -p ${{ env.RELEASE_FILES }}
+          gh release create ${GITHUB_REF#refs/tags/} \
+            --repo ${{github.repository}} \
+            -t ${GITHUB_REF#refs/tags/} \
+            -d -p ${{ env.RELEASE_FILES }}

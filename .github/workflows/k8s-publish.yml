@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       reg_pfx: "rground"
+      resource_group: "rg"
     steps:
       - uses: actions/checkout@master
 
@@ -32,7 +33,7 @@ jobs:
         with:
           creds: "${{ secrets.AZURE_CREDENTIALS }}"
           cluster-name: relayground
-          resource-group: Main_group
+          resource-group: ${{ env.resource_group }}
 
       - uses: Azure/k8s-deploy@v4
         with:

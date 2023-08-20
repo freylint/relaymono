@@ -1,0 +1,12 @@
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "manifests/**/*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master

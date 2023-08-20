@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: relayground-tes3mp-server
+spec:
+  containers:
+    - name: OpenMW_Server
+      image: tes3mp/server
+  ports:
+    - name: game
+      protocol: UDP
+      containerPort: 25565
+  env:
+    - name: Max Player Count
+      TES3MP_SERVER_MAXIMUM_PLAYERS: 4

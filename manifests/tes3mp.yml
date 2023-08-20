@@ -5,7 +5,7 @@ metadata:
   labels:
     app: tes3mp
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: tes3mp

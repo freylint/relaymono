@@ -1,5 +1,5 @@
 # Release automation for the qaftray application
-name: "publish"
+name: "Publish QAFTray Release"
 on:
   push:
     tags: -"qaftray-v*"

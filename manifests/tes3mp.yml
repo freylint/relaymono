@@ -1,15 +1,21 @@
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: relayground-tes3mp-server
+  name: Tes3MP Server Depolyment
+  labels:
+    app: tes3mp
 spec:
-  containers:
-    - name: OpenMW_Server
-      image: tes3mp/server
-      ports:
-        - name: game
-          protocol: UDP
-          containerPort: 25565
-      env:
-        - name: Max Player Count
-          TES3MP_SERVER_MAXIMUM_PLAYERS: 4
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tes3mp
+  template:
+    metadata:
+      labels:
+        app: tes3mp
+    spec:
+      containers:
+        - name: tes3mp
+          image: tes3mp/server
+          ports:
+            - containerPort: 25565

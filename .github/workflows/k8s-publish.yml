@@ -9,5 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      reg_pfx: "relayground"
     steps:
       - uses: actions/checkout@master
+      - uses: Azure/docker-login@v1
+        with:
+          login-server: ${{ env.reg_pfx }}.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}

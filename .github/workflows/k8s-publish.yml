@@ -32,3 +32,9 @@ jobs:
           creds: "${{ secrets.AZURE_CREDENTIALS }}"
           cluster-name: relayground
           resource-group: Main_group
+
+      - uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          manifests: |
+              manifests/*.yml

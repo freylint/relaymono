@@ -4,6 +4,7 @@ on:
     branches:
       - "master"
     paths:
+      - ".github/workflows/k8s-publish.yml"
       - "manifests/**/*.yml"
 
 jobs:

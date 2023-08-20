@@ -6,6 +6,10 @@ on:
     paths:
       - ".github/workflows/k8s-publish.yml"
       - "manifests/**/*.yml"
+permissions:
+  id-token: write
+  contents: read
+  actions: read
 
 jobs:
   build:
@@ -14,8 +18,17 @@ jobs:
       reg_pfx: "relayground"
     steps:
       - uses: actions/checkout@master
+
+      # Log into docker registry fro relayground
       - uses: Azure/docker-login@v1
         with:
           login-server: ${{ env.reg_pfx }}.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      # Log into azure
+      - uses: Azure/aks-set-context@v1
+        with:
+          creds: "${{ secrets.AZURE_CREDENTIALS }}"
+          cluster-name: relayground
+          resource-group: contoso-rg

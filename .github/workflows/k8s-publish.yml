@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/k8s-publish.yml"
       - "manifests/**/*.yml"
+  workflow_dispatch:
 permissions:
   id-token: write
   contents: read

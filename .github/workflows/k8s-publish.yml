@@ -4,7 +4,7 @@ on:
     branches:
       - "master"
     paths:
-      - "manifests/**/*"
+      - "manifests/**/*.yml"
 
 jobs:
   build:

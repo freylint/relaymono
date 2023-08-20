@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      reg_pfx: "relayground"
+      reg_pfx: "rground"
     steps:
       - uses: actions/checkout@master
 
@@ -37,4 +37,4 @@ jobs:
         with:
           action: deploy
           manifests: |
-              manifests/tes3mp.yml
+            manifests/tes3mp.yml

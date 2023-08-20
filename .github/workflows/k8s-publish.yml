@@ -31,4 +31,4 @@ jobs:
         with:
           creds: "${{ secrets.AZURE_CREDENTIALS }}"
           cluster-name: relayground
-          resource-group: contoso-rg
+          resource-group: Main_group

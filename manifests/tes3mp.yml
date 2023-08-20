@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: tes3mp
-          image: tes3mp/server
+          image: tes3mp/server:0.8.1
           ports:
             - containerPort: 25565

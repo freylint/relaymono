@@ -37,4 +37,4 @@ jobs:
         with:
           action: deploy
           manifests: |
-              manifests/*.yml
+              manifests/tes3mp.yml

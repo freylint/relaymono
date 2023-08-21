@@ -24,12 +24,9 @@ jobs:
           node-version: 18
           cache: "npm"
 
-      # Log into azure
-      - uses: Azure/aks-set-context@v1
+      - uses: azure/login@v1
         with:
-          creds: "${{ secrets.AZURE_CREDENTIALS }}"
-          cluster-name: ${{ secrets.AZ_CLUSTER }}
-          resource-group: ${{ secrets.AZ_RESOURCE_GROUP }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Log into docker registry for relayground
       - uses: Azure/docker-login@v1

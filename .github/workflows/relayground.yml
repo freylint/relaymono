@@ -39,15 +39,3 @@ jobs:
           TAG="${{ secrets.ACR_REG }}/${{env.appname}}:latest"
           docker build . -t ${TAG} -f containers/${{env.appname}} -o type=docker
           docker push ${TAG}
-
-      - name: "Deploy to Azure Container Instances"
-        uses: "azure/aci-deploy@v1"
-        with:
-          resource-group: ${{ secrets.ACR_REG }}
-          dns-name-label: ${{ secrets.ACR_REG}}${{ github.run_number }}
-          image: ${{secrets.ACR_REG}}/${{env.appname}}:latest
-          registry-login-server: ${{secrets.ACR_REG}}
-          registry-username: ${{ secrets.REGISTRY_USERNAME }}
-          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          name: ${{env.appname}}
-          location: ${{env.region}}

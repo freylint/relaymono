@@ -41,3 +41,4 @@ jobs:
           action: deploy
           manifests: |
             manifests/tes3mp.yml
+            manifests/balancer.yml

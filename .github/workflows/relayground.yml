@@ -27,24 +27,24 @@ jobs:
       # Log into docker registry for relayground
       - uses: Azure/docker-login@v1
         with:
-          login-server: ${{ env.reg }}
+          login-server: ${{ secrets.ACR_REG }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          TARGET=${{ env.reg }}/${{env.appname}}:${{ github.sha }} \
+          TAG="${{ secrets.ACR_REG }}/${{env.appname}}:${{ github.sha }}" \
           docker build . \
-            -t $TARGET \
+            -t $TAG \
             -f containers/${{env.appname}}
-          docker push $TARGET
+          docker push $TAG
 
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"
         with:
-          resource-group: ${{ env.reg }}
-          dns-name-label: ${{ env.reg}}${{ github.run_number }}
-          image: ${{ env.reg }}/${{env.appname}}:${{ github.sha }}
-          registry-login-server: ${{env.reg}}
+          resource-group: ${{ secrets.ACR_REG }}
+          dns-name-label: ${{ secrets.ACR_REG}}${{ github.run_number }}
+          image: ${{secrets.ACR_REG}}/${{env.appname}}:${{ github.sha }}
+          registry-login-server: ${{secrets.ACR_REG}}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
           name: ${{env.appname}}

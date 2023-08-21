@@ -32,11 +32,11 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          local target=${{ env.reg }}/${{env.appname}}:${{ github.sha }} \
+          TARGET=${{ env.reg }}/${{env.appname}}:${{ github.sha }} \
           docker build . \
-            -t $target \
+            -t $TARGET \
             -f containers/${{env.appname}}
-          docker push $target
+          docker push $TARGET
 
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"

@@ -20,6 +20,7 @@ spec:
           image: tes3mp/server:0.8.1
           ports:
             - containerPort: 25565
-          limits:
-            cpu: "800m"
-            memory: "1Gi"
+          resources:
+            limits:
+              cpu: "800m"
+              memory: "1Gi"

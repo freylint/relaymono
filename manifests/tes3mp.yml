@@ -1,25 +1,16 @@
-apiVersion: apps/v1
+apiVersion: v1
 kind: Pod
 metadata:
-  name: tes3mp-deployment
+  name: tes3mp
   labels:
-    app: tes3mp
+    name: tes3mp
 spec:
-  replicas: 0
-  selector:
-    matchLabels:
-      app: tes3mp
-  template:
-    metadata:
-      labels:
-        app: tes3mp
-    spec:
-      containers:
-        - name: tes3mp
-          image: tes3mp/server:0.8.1
-          ports:
-            - containerPort: 25565
-          resources:
-            limits:
-              cpu: 1500m
-              memory: 1G
+  containers:
+    - name: tes3mp
+      image: tes3mp/server:0.8.1
+      resources:
+        limits:
+          memory: "1G"
+          cpu: "1500m"
+      ports:
+        - containerPort: 25565

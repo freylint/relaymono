@@ -6,7 +6,7 @@ metadata:
     app: tes3mp
   namespace: default
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: tes3mp

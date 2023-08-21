@@ -1,4 +1,4 @@
-name: "Update Relayground Container"
+name: "Relayground"
 on:
   push:
     branches: "main"

@@ -41,4 +41,6 @@ jobs:
           action: deploy
           manifests: |
             manifests/tes3mp.yml
-            manifests/balancer.yml
+            manifests/tes3mp-balancer.yml
+            manifests/relayground.yml
+            manifests/relayground-balancer.yml

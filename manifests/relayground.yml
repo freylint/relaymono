@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relayground
+  labels:
+    app: relayground
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: relayground
+  template:
+    metadata:
+      labels:
+        app: relayground
+    spec:
+      containers:
+        - name: relayground
+          image: relayground:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "800m"
+              memory: "1Gi"

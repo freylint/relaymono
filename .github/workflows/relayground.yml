@@ -32,8 +32,8 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          TAG="${{ secrets.ACR_REG }}/${{env.appname}}:${{ github.sha }}" \
-          docker build . \ -t ${TAG} -f containers/${{env.appname}} && \
+          TAG="${{ secrets.ACR_REG }}/${{env.appname}}:${{ github.sha }}"
+          docker build . -t ${TAG} -f containers/${{env.appname}} -o type=docke
           docker push ${TAG}
 
       - name: "Deploy to Azure Container Instances"

@@ -1,0 +1,27 @@
+FROM node:lts-hydrogen as builder
+
+# Create a non-root user for build
+WORKDIR /usr/app/
+COPY ./ ./
+
+# Install project dependencies
+RUN npm ci
+
+# Build project
+RUN npm run build -w ./packages/relayground
+
+FROM busybox:1.35 as runner
+
+# Create a non-root user for server
+RUN adduser -D static
+USER static
+WORKDIR /home/static
+
+# Copy the static files into container
+COPY --from=builder --chown=static:static /usr/app/packages/relayground/out/ /home/static/
+
+# Configure environment
+EXPOSE 8080
+
+# Start the server
+CMD ["busybox", "httpd", "-f", "-v", "-p", "8080"]

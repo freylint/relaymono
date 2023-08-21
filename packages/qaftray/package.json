@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "tauri": "tauri",
-    "ci": "act -j qaftray-publish"
+    "ci": "act -j qaftray-publish",
+    "test": "cargo test"
   },
   "dependencies": {},
   "devDependencies": {

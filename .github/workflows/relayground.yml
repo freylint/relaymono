@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          TAG="${{ secrets.ACR_REG }}/${{env.appname}}:${{ github.sha }}"
+          TAG="${{ secrets.ACR_REG }}/${{env.appname}}:latest"
           docker build . -t ${TAG} -f containers/${{env.appname}} -o type=docker
           docker push ${TAG}
 
@@ -45,7 +45,7 @@ jobs:
         with:
           resource-group: ${{ secrets.ACR_REG }}
           dns-name-label: ${{ secrets.ACR_REG}}${{ github.run_number }}
-          image: ${{secrets.ACR_REG}}/${{env.appname}}:${{ github.sha }}
+          image: ${{secrets.ACR_REG}}/${{env.appname}}:latest
           registry-login-server: ${{secrets.ACR_REG}}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}

@@ -33,7 +33,7 @@ jobs:
 
       - run: |
           TAG="${{ secrets.ACR_REG }}/${{env.appname}}:${{ github.sha }}" \
-          docker build . \ -t ${TAG} -f containers/${{env.appname}} -o type=docker
+          docker build . \ -t ${TAG} -f containers/${{env.appname}} && \
           docker push ${TAG}
 
       - name: "Deploy to Azure Container Instances"

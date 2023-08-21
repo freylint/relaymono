@@ -1,0 +1,38 @@
+name: "Update Relayground Container"
+on:
+  push:
+    branches: "main"
+    paths:
+      - "packages/relayground/"
+      - "/package*.json"
+  workflow_dispatch:
+
+jobs:
+  build-rg-docker:
+    runs-on: ubuntu-20.04
+    env:
+      reg_pfx: "rground"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      # Log into docker registry for relayground
+      - uses: Azure/docker-login@v1
+        with:
+          login-server: ${{ env.reg_pfx }}.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      # Build and push relayground container
+      - uses: docker/build-push-action@v2
+        with:
+          context: packages/relayground
+          file: packages/relayground/Dockerfile
+          push: true
+          tags: ${{ env.reg_pfx }}.azurecr.io/relayground:latest

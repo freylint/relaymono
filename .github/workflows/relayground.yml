@@ -34,9 +34,9 @@ jobs:
       - run: |
           TAG="${{ secrets.ACR_REG }}/${{env.appname}}:${{ github.sha }}" \
           docker build . \
-            -t $TAG \
+            -t ${TAG} \
             -f containers/${{env.appname}}
-          docker push $TAG
+          docker push ${TAG}
 
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"

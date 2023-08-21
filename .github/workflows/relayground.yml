@@ -11,7 +11,9 @@ jobs:
   build-rg-docker:
     runs-on: ubuntu-20.04
     env:
-      reg_pfx: "rground"
+      reg: "{{ secrets.ACR_REG_PFX}}.azurecr.io"
+      appname: "relayground"
+      region: "north central us"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,15 +27,25 @@ jobs:
       # Log into docker registry for relayground
       - uses: Azure/docker-login@v1
         with:
-          login-server: ${{ env.reg_pfx }}.azurecr.io
+          login-server: ${{ env.reg }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      # Build and push relayground container
-      - uses: docker/build-push-action@v2
+      - run: |
+          local target=${{ env.reg }}/${{env.appname}}:${{ github.sha }} \
+          docker build . \
+            -t $target \
+            -f containers/${{env.appname}}
+          docker push $target
+
+      - name: "Deploy to Azure Container Instances"
+        uses: "azure/aci-deploy@v1"
         with:
-          context: ./
-          target: runner
-          file: containers/relayground
-          push: true
-          tags: ${{ env.reg_pfx }}.azurecr.io/relayground:latest
+          resource-group: ${{ env.reg }}
+          dns-name-label: ${{ env.reg}}${{ github.run_number }}
+          image: ${{ env.reg }}/${{env.appname}}:${{ github.sha }}
+          registry-login-server: ${{env.reg}}
+          registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          name: ${{env.appname}}
+          location: ${{env.region}}

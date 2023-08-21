@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tes3mp
+  labels:
+    app: tes3mp
+  namespace: default
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: tes3mp
+  template:
+    metadata:
+      labels:
+        app: tes3mp
+    spec:
+      containers:
+        - name: tes3mp
+          image: tes3mp/server:0.8.1
+          ports:
+            - containerPort: 25565
+          limits:
+            cpu: 800m
+            memory: 1Gi

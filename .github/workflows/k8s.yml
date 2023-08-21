@@ -21,7 +21,7 @@ jobs:
       # Log into docker registry fro relayground
       - uses: Azure/docker-login@v1
         with:
-          login-server: ${{ secrets.REGISTRY_SERVER }}
+          login-server: ${{ secrets.ACR_REG }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 

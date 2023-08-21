@@ -16,6 +16,7 @@ spec:
         app: tes3mp
     spec:
       containers:
+        # TODO Add volume to keep player data and server configs
         - name: tes3mp
           image: tes3mp/server:0.8.1
           ports:

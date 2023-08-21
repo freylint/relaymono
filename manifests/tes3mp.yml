@@ -24,3 +24,10 @@ spec:
             limits:
               cpu: "800m"
               memory: "1Gi"
+          env:
+            - name: TES3MP_SERVER_NAME
+              value: "Relayground Server"
+            - name: TES3MP_SERVER_PORT
+              value: "25565"
+            - name: TES3MP_SERVER_MAX_PLAYERS
+              value: "4"

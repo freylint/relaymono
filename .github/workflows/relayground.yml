@@ -33,6 +33,7 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           context: ./
+          target: runner
           file: containers/relayground
           push: true
           tags: ${{ env.reg_pfx }}.azurecr.io/relayground:latest

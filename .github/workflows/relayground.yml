@@ -3,8 +3,8 @@ on:
   push:
     branches: "main"
     paths:
-      - "packages/relayground/"
-      - "/package*.json"
+      - "packages/relayground/**/*"
+      - "package*.json"
   workflow_dispatch:
 
 jobs:

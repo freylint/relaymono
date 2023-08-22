@@ -13,9 +13,6 @@ jobs:
     env:
       reg: "{{ secrets.ACR_REG_PFX}}.azurecr.io"
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
@@ -49,6 +46,8 @@ jobs:
       appname: "relayground"
       region: "north central us"
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - run: |
           TAG="${{ secrets.ACR_REG }}/${{env.appname}}:latest"
           docker build . -t ${TAG} -f containers/${{env.appname}} -o type=docker

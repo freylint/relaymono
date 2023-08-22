@@ -44,6 +44,7 @@ jobs:
 
   build:
     runs-on: ubuntu-20.04
+    needs: [setup]
     env:
       appname: "relayground"
       region: "north central us"
@@ -52,3 +53,14 @@ jobs:
           TAG="${{ secrets.ACR_REG }}/${{env.appname}}:latest"
           docker build . -t ${TAG} -f containers/${{env.appname}} -o type=docker
           docker push ${TAG}
+
+  deploy:
+    needs: [build, az-login]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          manifests: |
+            manifests/relayground.yml
+            manifests/relayground-balancer.yml

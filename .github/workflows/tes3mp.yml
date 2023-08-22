@@ -18,13 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      # Log into docker registry fro relayground
-      - uses: Azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.ACR_REG }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
-
       # Log into azure
       - uses: Azure/aks-set-context@v1
         with:
@@ -38,5 +31,3 @@ jobs:
           manifests: |
             manifests/tes3mp.yml
             manifests/tes3mp-balancer.yml
-            manifests/relayground.yml
-            manifests/relayground-balancer.yml

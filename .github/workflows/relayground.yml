@@ -8,12 +8,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-rg-docker:
+  setup:
     runs-on: ubuntu-20.04
     env:
       reg: "{{ secrets.ACR_REG_PFX}}.azurecr.io"
-      appname: "relayground"
-      region: "north central us"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,6 +22,9 @@ jobs:
           node-version: 18
           cache: "npm"
 
+  az-login:
+    runs-on: ubuntu-20.04
+    steps:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -35,6 +36,18 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      - uses: Azure/aks-set-context@v1
+        with:
+          creds: "${{ secrets.AZURE_CREDENTIALS }}"
+          cluster-name: ${{ secrets.AZ_CLUSTER }}
+          resource-group: ${{ secrets.AZ_RESOURCE_GROUP }}
+
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      appname: "relayground"
+      region: "north central us"
+    steps:
       - run: |
           TAG="${{ secrets.ACR_REG }}/${{env.appname}}:latest"
           docker build . -t ${TAG} -f containers/${{env.appname}} -o type=docker

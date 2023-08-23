@@ -22,22 +22,12 @@ jobs:
   az-login:
     runs-on: ubuntu-20.04
     steps:
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       # Log into docker registry for relayground
       - uses: Azure/docker-login@v1
         with:
           login-server: ${{ secrets.ACR_REG }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-
-      - uses: Azure/aks-set-context@v1
-        with:
-          creds: "${{ secrets.AZURE_CREDENTIALS }}"
-          cluster-name: ${{ secrets.AZ_CLUSTER }}
-          resource-group: ${{ secrets.AZ_RESOURCE_GROUP }}
 
   build:
     runs-on: ubuntu-20.04
@@ -54,12 +44,13 @@ jobs:
           docker push ${TAG}
 
   deploy:
-    needs: [build, az-login]
+    needs: [build]
     runs-on: ubuntu-20.04
     steps:
-      - uses: Azure/k8s-deploy@v4
+      - uses: Azure/k8s-set-context@v1
         with:
-          action: deploy
-          manifests: |
-            manifests/relayground.yml
-            manifests/relayground-balancer.yml
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+      - run: |
+          kubectl apply -f manifests/relayground.yml
+          kubectl apply -f manifests/relayground-balancer.yml
